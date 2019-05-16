@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="340dp"
+        android:layout_height="231dp"
+        android:layout_centerInParent="true"
+
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="12dp">
+
+
+        <Button
+            android:id="@+id/btn_see_meaning"
+            android:layout_width="359dp"
+            android:layout_height="66dp"
+            android:layout_gravity="bottom|center"
+            android:text="Tap to see meaning ->" />
+
+        <TextView
+            android:id="@+id/card_front_word_itself"
+            android:layout_width="176dp"
+            android:layout_height="104dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:text="TextView" />
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
