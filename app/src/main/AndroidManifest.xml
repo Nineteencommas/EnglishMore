@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TopicListActivity"></activity>
         <activity android:name=".DeckersListActivity" />
         <activity android:name=".CardActivity" />
         <activity android:name=".MainActivity">

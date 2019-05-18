@@ -15,6 +15,7 @@ public class CardFrontFragment extends Fragment {
     private Button btn_see_meaning;
     private TextView wordText;
     private String strWord;
+    private Integer index;
     public CardFrontFragment() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +44,9 @@ public class CardFrontFragment extends Fragment {
 
     }
 
-    public void changeText(String inText)
+    public void changeText(String inText,Integer index)
     {
+        this.index = index;
         if(wordText == null)
         {
             strWord = inText;

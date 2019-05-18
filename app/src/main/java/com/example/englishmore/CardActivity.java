@@ -14,16 +14,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 public class CardActivity extends Activity
 {
+/**View elements**/
     TextView progressText;
     CardFrontFragment front = new CardFrontFragment();
     CardBackFragment back = new CardBackFragment();
-
+/*data structure*/
     ArrayList<Word> wordList = new ArrayList<Word>();
+    ArrayList<Integer> masteredList = new ArrayList<Integer>();
+/*global variable*/
     int wordCounter = 0;
-
+    Random rand;
     private static boolean mShowingBack = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +40,14 @@ public class CardActivity extends Activity
                 .beginTransaction()
                 .add(R.id.words, front)
                 .commit();
+        rand =new Random(25);
 
-       downloadWords();
+        downloadWords();
 
        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
            @Override
            public void onBackStackChanged() {
-               front.changeText(wordList.get(wordCounter).getWorditself());
+               front.changeText(wordList.get(wordCounter).getWorditself(),wordCounter);
            }
        });
        // when the card front fragment is popped up from the stack, only its view will be reconstruced,
@@ -49,29 +56,21 @@ public class CardActivity extends Activity
 
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
+/* fragment transaction*/
     public void flipCard() {
 
         if (mShowingBack) {
-            if(wordCounter < wordList.size()-1)
-            {
-                wordCounter++;
-                progressText.setText("Already mastered "+ wordCounter);
-                getFragmentManager().popBackStack();
-                mShowingBack = false;
 
-                return;
-            }
-            else
-            {
+            wordCounter = rand.nextInt(wordList.size());
+            progressText.setText("Already mastered "+ masteredList.size());
+            getFragmentManager().popBackStack();
+            mShowingBack = false;
+            return;
 
-                return;
-            }
 
         }  // to indicate the current card state, whether in front or back
         mShowingBack = true;
-        back.setText(wordList.get(wordCounter).getWorditself(),wordList.get(wordCounter).toString());
+        back.setText(wordList.get(wordCounter).getWorditself(),wordList.get(wordCounter).toString(),wordCounter);
         //in the first place the back object is created within the flipCard(),
         // and the data update works,
         // if only create the back object once within the activity,
@@ -89,13 +88,17 @@ public class CardActivity extends Activity
                 .commit();
 
     }
-    private void initializeCardFront(String intext)
+
+/* Initialize the card front when the download finishes*/
+    private void initializeCardFront(String inText)
     {
-        front.changeText(intext);
+        front.changeText(inText,wordCounter);
     }
+
+/* download words with volley*/
     private void downloadWords()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"https://nineteencommas.github.io/EnglishMore/testwords.json",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"https://nineteencommas.github.io/EnglishMoreJsons/testwords.json",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -107,6 +110,7 @@ public class CardActivity extends Activity
                         else
                         {
                             initializeCardFront(wordList.get(0).getWorditself());
+                            progressText.setText("");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -118,5 +122,37 @@ public class CardActivity extends Activity
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
+    /*return the state of Word with index as input*/
+    public boolean ifMastered(Integer in_index)
+    {
+        if(masteredList.contains(in_index))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /*add a word to the masteredList with its index, when the I know the word button is pressed*/
+    public void addMastered(Integer index)
+    {
+        if(!masteredList.contains(index))
+        {
+            masteredList.add(index);
+        }// else do nothing
+    }
+
+    /* remove a word from the masteredList with its index, when the I don't know button is  pressed*/
+    public void removeMastered(Integer index)
+    {
+        if(masteredList.contains(index))
+        {
+            masteredList.remove(index);
+
+        } // else do nothing
+    }
+
 }
 

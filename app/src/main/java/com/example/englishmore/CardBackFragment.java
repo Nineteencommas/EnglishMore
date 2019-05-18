@@ -17,6 +17,7 @@ public class CardBackFragment extends Fragment {
     private TextView wordDetail;
     private String strItself;
     private String strDetail;
+    private Integer index;
     public CardBackFragment() {
     }
 
@@ -38,8 +39,8 @@ public class CardBackFragment extends Fragment {
         btn_know.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((CardActivity)getActivity()).addMastered(index);
                 ((CardActivity)getActivity()).flipCard();
-
 
             }
         });
@@ -47,13 +48,15 @@ public class CardBackFragment extends Fragment {
         btn_not_know.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((CardActivity)getActivity()).removeMastered(index);
                 ((CardActivity)getActivity()).flipCard();
             }
         });
         return v;
     }
-public void setText(String word, String explain)
+public void setText(String word, String explain,Integer index)
 {
+    this.index = index;
     if(wordItself == null)
     {
         strItself = word;
