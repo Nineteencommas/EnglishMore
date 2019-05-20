@@ -1,7 +1,9 @@
 package com.example.englishmore;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +35,18 @@ public class DeckersListActivity extends AppCompatActivity {
 
     }
 
-    public void setOneProgress()
+    public void setOneProgress(int index, Integer progress)
     {
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mastered.set(0,data.getExtras().getInt("progress"));
+        adapter.notifyDataSetChanged();
 
     }
 }

@@ -2,6 +2,7 @@ package com.example.englishmore;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -95,7 +96,19 @@ public class CardActivity extends Activity
         front.changeText(inText,wordCounter);
     }
 
-/* download words with volley*/
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent();
+        intent.putExtra("progress",2);
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
+    }
+
+    /* download words with volley*/
     private void downloadWords()
     {
         StringRequest stringRequest = new StringRequest(Request.Method.GET,"https://nineteencommas.github.io/EnglishMoreJsons/testwords.json",
@@ -153,6 +166,7 @@ public class CardActivity extends Activity
 
         } // else do nothing
     }
+
 
 }
 

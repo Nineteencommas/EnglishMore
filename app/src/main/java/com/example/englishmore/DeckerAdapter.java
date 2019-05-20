@@ -1,6 +1,7 @@
 package com.example.englishmore;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -69,7 +70,7 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,CardActivity.class);
-                    context.startActivity(intent);
+                    ((Activity) context).startActivityForResult(intent,1);
                 }
             });
         }
