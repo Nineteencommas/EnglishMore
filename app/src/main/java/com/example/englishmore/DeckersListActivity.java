@@ -48,7 +48,7 @@ public class DeckersListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mastered.set(0,data.getExtras().getInt("progress"));
+        mastered.set(data.getExtras().getInt("deckerIndex"),data.getExtras().getInt("progress"));
         adapter.notifyDataSetChanged();
 
     }

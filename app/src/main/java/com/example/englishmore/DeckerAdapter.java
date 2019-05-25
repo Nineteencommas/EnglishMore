@@ -80,6 +80,7 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
                     Bundle bundle = new Bundle();
                     bundle.putString("deckerName",topic+"Decker"+(getAdapterPosition()+1));
                     bundle.putString("topic",topic);
+                    bundle.putInt("deckerIndex",getAdapterPosition());
                     Log.d("fromDecker",topic+"Decker"+(getAdapterPosition()+1));
                     intent.putExtras(bundle);
                     ((Activity) context).startActivityForResult(intent,1);

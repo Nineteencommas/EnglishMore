@@ -32,13 +32,14 @@ public class CardActivity extends Activity
 
     private String deckerName;
     private String topic;
-
+    private int deckerIndex;
     int previousMastered = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle bundle = this.getIntent().getExtras();
         deckerName = bundle.getString("deckerName");
         topic = bundle.getString("topic");
+        deckerIndex = bundle.getInt("deckerIndex");
         Log.d("card",deckerName);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
@@ -108,6 +109,7 @@ public class CardActivity extends Activity
 
         Intent intent = new Intent();
         intent.putExtra("progress",masteredList.size());
+        intent.putExtra("deckerIndex",deckerIndex);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
     }
