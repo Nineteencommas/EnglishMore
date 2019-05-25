@@ -4,6 +4,7 @@ package com.example.englishmore;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,13 +22,19 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
     ArrayList<Integer> mastered;
     ArrayList<Integer> total;
     ArrayList<String> url;
+
+    String topicInfo;
+    int deckerIndex;
     Context context;
 
-    public DeckerAdapter(ArrayList<Integer> mastered, ArrayList<Integer> total, Context context)
+    public DeckerAdapter(ArrayList<Integer> mastered, ArrayList<Integer> total,String topicInfo,int deckerIndex, Context context)
     {
         this.mastered = mastered;
         this.total = total;
         this.context = context;
+        this.topicInfo = topicInfo;
+        this.deckerIndex = deckerIndex;
+
     }
 
     @NonNull
@@ -61,15 +68,19 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
         public ViewHolder(View view){
             super(view);
 
-            decker_num_txt  = (TextView) view.findViewById(R.id.decker_num_txt);
-            mastered_num_txt = (TextView) view.findViewById(R.id.mastered_num_txt);
-            progressBar = (ProgressBar) view.findViewById(R.id.progress_per_decker);
-            startDeckerBtn = (Button) view.findViewById(R.id.practice_decker_btn);
+            decker_num_txt  = view.findViewById(R.id.decker_num_txt);
+            mastered_num_txt = view.findViewById(R.id.mastered_num_txt);
+            progressBar = view.findViewById(R.id.progress_per_decker);
+            startDeckerBtn = view.findViewById(R.id.practice_decker_btn);
 
             startDeckerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,CardActivity.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("topicInfo",topicInfo );
+                    bundle.putInt("deckerIndex",deckerIndex);
                     ((Activity) context).startActivityForResult(intent,1);
                 }
             });

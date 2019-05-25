@@ -3,9 +3,8 @@ package com.example.englishmore;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -26,14 +25,21 @@ public class CardActivity extends Activity
 /*data structure*/
     ArrayList<Word> wordList = new ArrayList<Word>();
     ArrayList<Integer> masteredList = new ArrayList<Integer>();
-/*global variable*/
+/*flag and counter variable*/
     int wordCounter = 0;
     Random rand;
     private static boolean mShowingBack = false;
 
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "com.example.englishmore.userProgress";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Bundle bundle = this.getIntent().getExtras();
+        String topicInfo= bundle.getString("topicInfo");// get the string of topic info
+        int deckerIndex = bundle.getInt("deckerIndex");// get the integer of
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
         progressText = findViewById(R.id.card_progress);
@@ -42,8 +48,8 @@ public class CardActivity extends Activity
                 .add(R.id.words, front)
                 .commit();
         rand =new Random(25);
-
-        downloadWords();
+        String url = "https://nineteencommas.github.io/EnglishMoreJsons/testwords.json";
+        downloadWords(url);
 
        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
            @Override
@@ -103,19 +109,30 @@ public class CardActivity extends Activity
     public void onBackPressed() {
 
         Intent intent = new Intent();
-        intent.putExtra("progress",2);
+        intent.putExtra("progress",233);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        Gson gson = new Gson();
+//
+//        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+//        preferencesEditor.putString("", mCount);
+//        preferencesEditor.putInt(COLOR_KEY, mColor);
+//        preferencesEditor.apply();
+    }
+
     /* download words with volley*/
-    private void downloadWords()
+    private void downloadWords(String url)
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"https://nineteencommas.github.io/EnglishMoreJsons/testwords.json",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        wordList = JsonParser.getAllWords(response);
+                        wordList = JsonHelper.getAllWords(response);
                         if(wordList.size()== 0)
                         {
                             initializeCardFront("nothing happened. i'm so sorry");
@@ -166,6 +183,8 @@ public class CardActivity extends Activity
 
         } // else do nothing
     }
+
+
 
 
 }

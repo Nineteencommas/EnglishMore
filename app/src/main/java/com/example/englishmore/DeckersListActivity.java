@@ -17,6 +17,10 @@ public class DeckersListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Bundle bundle = this.getIntent().getExtras();
+        String topicInfo= bundle.getString("");// get the string of topic info
+        int deckerIndex = bundle.getInt("deckerNum");// get the integer of
         mastered.add(1);
         total.add(1);
         mastered.add(2);
@@ -24,7 +28,7 @@ public class DeckersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deckers_list);
         RecyclerView mRecyclerView = findViewById(R.id.deckerRecycle);
-        adapter = new DeckerAdapter(mastered,total,this);
+        adapter = new DeckerAdapter(mastered,total,topicInfo,deckerIndex,this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);

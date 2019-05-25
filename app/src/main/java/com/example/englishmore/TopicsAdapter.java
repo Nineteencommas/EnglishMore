@@ -2,6 +2,7 @@ package com.example.englishmore;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     public int getItemCount() {
 
 
-        return mastered.size();
+        return topics.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,6 +69,13 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context,DeckersListActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("topic", topics.get(getAdapterPosition()));
+                    bundle.putInt("topicProgress",mastered.get(getAdapterPosition()));
+                    bundle.putInt("deckerNum", getAdapterPosition());
+
+                    intent.putExtras(bundle);
+
                     context.startActivity(intent);
                 }
             });

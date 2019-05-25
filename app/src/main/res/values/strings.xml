@@ -8,4 +8,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="know">I know this word</string>
     <string name="not_know">I do not know this word</string>
+    <string name="welcome_to_english_more">Welcome to English More</string>
+    <string name="learn_english">Learn English</string>
 </resources>
