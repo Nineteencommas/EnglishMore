@@ -4,7 +4,6 @@ package com.example.englishmore;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder> {
@@ -22,19 +20,13 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
     ArrayList<Integer> mastered;
     ArrayList<Integer> total;
     ArrayList<String> url;
-
-    String topicInfo;
-    int deckerIndex;
     Context context;
 
-    public DeckerAdapter(ArrayList<Integer> mastered, ArrayList<Integer> total,String topicInfo,int deckerIndex, Context context)
+    public DeckerAdapter(ArrayList<Integer> mastered, ArrayList<Integer> total, Context context)
     {
         this.mastered = mastered;
         this.total = total;
         this.context = context;
-        this.topicInfo = topicInfo;
-        this.deckerIndex = deckerIndex;
-
     }
 
     @NonNull
@@ -77,10 +69,6 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,CardActivity.class);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("topicInfo",topicInfo );
-                    bundle.putInt("deckerIndex",deckerIndex);
                     ((Activity) context).startActivityForResult(intent,1);
                 }
             });

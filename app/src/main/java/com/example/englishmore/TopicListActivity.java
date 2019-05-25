@@ -14,7 +14,6 @@ public class TopicListActivity extends AppCompatActivity {
     ArrayList<Integer> mastered = new ArrayList<>();
     ArrayList<Integer> total = new ArrayList<>();
     ArrayList<String> topics = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,24 +32,40 @@ public class TopicListActivity extends AppCompatActivity {
     }
 
 public void getTopicInfoAndTotal() {
-    SharedPreferences preferences = getSharedPreferences("com.example.englishmore.topicInfo", MODE_PRIVATE);
-    ArrayList<ArrayList> afterParsed = JsonHelper.getTopicFromTopicInfo(preferences.getString("topicInfo", "defaultValueforTopicInfo"));
-    ArrayList<Integer> totalTemp = afterParsed.get(1);
-    ArrayList<String> topicsTemp = afterParsed.get(0);
-    for (Integer each : totalTemp) {
-        total.add(each);
-    }
-    for (String each : topicsTemp)
-    {
+    SharedPreferences preferences = getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
+    ArrayList<String> topicList = JsonHelper.getTopicFromBasicInfo(preferences.getString("topicList", "defaultValueforTopicInfo"));
+    preferences = getSharedPreferences("com.example.englishmore.topicAndDeckerInfo",MODE_PRIVATE);
+    for (String each : topicList) {
+        total.add((Integer)preferences.getInt(each+"TotalWords", 0));
         topics.add(each);
     }
 
-    mastered.add(0);
+
+    preferences = getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+
+    for ( String each : topics)
+    {
+        mastered.add((Integer)preferences.getInt(each,0));
+    }
+
     adapter.notifyDataSetChanged();
-}
-public void getTopicsProgress()
-{
+    // attention! The arraylist used for recyclerView shoudnt be changed, other wise the notifyDataSet will not take effect
+    //
 
-}
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mastered.clear();
+        SharedPreferences preferences = getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+
+        for ( String each : topics)
+        {
+            mastered.add((Integer)preferences.getInt(each,0));
+        }
+
+        adapter.notifyDataSetChanged();
+
+    }
 }

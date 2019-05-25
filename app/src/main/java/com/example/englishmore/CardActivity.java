@@ -30,31 +30,32 @@ public class CardActivity extends Activity
     Random rand;
     private static boolean mShowingBack = false;
 
-    private SharedPreferences mPreferences;
-    private String sharedPrefFile = "com.example.englishmore.userProgress";
-
-
+    private String deckerName;
+    private String topic;
+    private int deckerIndex;
+    int previousMastered = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         Bundle bundle = this.getIntent().getExtras();
-        String topicInfo= bundle.getString("topicInfo");// get the string of topic info
-        int deckerIndex = bundle.getInt("deckerIndex");// get the integer of
+        deckerName = bundle.getString("deckerName");
+        topic = bundle.getString("topic");
+        deckerIndex = bundle.getInt("deckerIndex");
+        Log.d("card",deckerName);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
         progressText = findViewById(R.id.card_progress);
+        getProgress();
         getFragmentManager()
                 .beginTransaction()
                 .add(R.id.words, front)
                 .commit();
         rand =new Random(25);
-        String url = "https://nineteencommas.github.io/EnglishMoreJsons/testwords.json";
-        downloadWords(url);
+        downloadWords();
 
        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
            @Override
            public void onBackStackChanged() {
-               front.changeText(wordList.get(wordCounter).getWorditself(),wordCounter);
+              front.changeText(wordList.get(wordCounter).getWorditself(),wordCounter);
            }
        });
        // when the card front fragment is popped up from the stack, only its view will be reconstruced,
@@ -73,8 +74,6 @@ public class CardActivity extends Activity
             getFragmentManager().popBackStack();
             mShowingBack = false;
             return;
-
-
         }  // to indicate the current card state, whether in front or back
         mShowingBack = true;
         back.setText(wordList.get(wordCounter).getWorditself(),wordList.get(wordCounter).toString(),wordCounter);
@@ -109,7 +108,8 @@ public class CardActivity extends Activity
     public void onBackPressed() {
 
         Intent intent = new Intent();
-        intent.putExtra("progress",233);
+        intent.putExtra("progress",masteredList.size());
+        intent.putExtra("deckerIndex",deckerIndex);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
     }
@@ -117,18 +117,14 @@ public class CardActivity extends Activity
     @Override
     protected void onPause() {
         super.onPause();
-//        Gson gson = new Gson();
-//
-//        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-//        preferencesEditor.putString("", mCount);
-//        preferencesEditor.putInt(COLOR_KEY, mColor);
-//        preferencesEditor.apply();
+        setProgress();
+
     }
 
     /* download words with volley*/
-    private void downloadWords(String url)
+    private void downloadWords()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://35.178.77.171:5000/get_word_list?decker="+deckerName,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -140,13 +136,13 @@ public class CardActivity extends Activity
                         else
                         {
                             initializeCardFront(wordList.get(0).getWorditself());
-                            progressText.setText("");
+                           // progressText.setText("");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("APP", error.toString());
+                Log.d("JSON", error.toString());
             }
         });
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
@@ -155,14 +151,7 @@ public class CardActivity extends Activity
     /*return the state of Word with index as input*/
     public boolean ifMastered(Integer in_index)
     {
-        if(masteredList.contains(in_index))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return masteredList.contains(in_index);
     }
 
     /*add a word to the masteredList with its index, when the I know the word button is pressed*/
@@ -177,11 +166,30 @@ public class CardActivity extends Activity
     /* remove a word from the masteredList with its index, when the I don't know button is  pressed*/
     public void removeMastered(Integer index)
     {
-        if(masteredList.contains(index))
-        {
-            masteredList.remove(index);
+        // else do nothing
+        masteredList.remove(index);
+    }
 
-        } // else do nothing
+
+    public void getProgress() {
+        SharedPreferences preferences = getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+        ArrayList<Integer> afterParsed = JsonHelper.getDeckerProgress(preferences.getString(deckerName, "defaultValueforTopicInfo"));
+        for(Integer each : afterParsed)
+        {
+            masteredList.add(each);
+        }
+       progressText.setText("Already mastered "+ masteredList.size());
+        previousMastered = afterParsed.size();
+    }
+    public void setProgress()
+    {
+        SharedPreferences mPreferences = getApplicationContext().getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(topic,mPreferences.getInt(topic,0) + masteredList.size()-previousMastered);
+        preferencesEditor.putString(deckerName,JsonHelper.putDeckerProgressToString(masteredList));
+        preferencesEditor.putInt(deckerName+"num",masteredList.size());
+        preferencesEditor.commit();
+
     }
 
 

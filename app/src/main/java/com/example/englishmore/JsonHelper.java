@@ -1,11 +1,13 @@
 package com.example.englishmore;
+
 import android.util.Log;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -123,5 +125,43 @@ public class JsonHelper {
     }
 
 
+    public static ArrayList<Integer> getDeckerProgress(String inString)
+    {
+        ArrayList<Integer> progress = new ArrayList<>();
+        try {
+            JSONArray topicArray = new JSONArray(inString);
+            for (int i = 0; i < topicArray.length(); i++) {
+                progress.add((Integer)topicArray.get(i));
+            }
+        }
+        catch(JSONException e)
+        {
+            Log.d("JSON","Something wrong with getDeckerProgress");
+        }
 
+        return progress;
+    }
+
+    public static String putDeckerProgressToString(ArrayList<Integer> progress)
+    {
+        Gson gson = new Gson();
+        return  gson.toJson(progress);
+    }
+
+    public static ArrayList<String> getTopicFromBasicInfo(String instring)
+    {
+        ArrayList<String> topic = new ArrayList<>();
+        try {
+            JSONArray topicArray = new JSONArray(instring);
+            for (int i = 0; i < topicArray.length(); i++) {
+                topic.add((String) topicArray.get(i));
+            }
+        }
+        catch(JSONException e)
+        {
+            Log.d("JSON","Something wrong with getDeckerProgress");
+        }
+
+        return topic;
+    }
 }
