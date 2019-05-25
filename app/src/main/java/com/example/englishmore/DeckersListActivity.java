@@ -26,7 +26,7 @@ public class DeckersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deckers_list);
         RecyclerView mRecyclerView = findViewById(R.id.deckerRecycle);
-        adapter = new DeckerAdapter(mastered,total,topic,);
+        adapter = new DeckerAdapter(mastered,total,topic,this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);
