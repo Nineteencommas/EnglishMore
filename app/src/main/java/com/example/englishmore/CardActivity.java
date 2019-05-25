@@ -3,9 +3,8 @@ package com.example.englishmore;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -26,29 +25,36 @@ public class CardActivity extends Activity
 /*data structure*/
     ArrayList<Word> wordList = new ArrayList<Word>();
     ArrayList<Integer> masteredList = new ArrayList<Integer>();
-/*global variable*/
+/*flag and counter variable*/
     int wordCounter = 0;
     Random rand;
     private static boolean mShowingBack = false;
 
+    private String deckerName;
+    private String topic;
 
+    int previousMastered = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle bundle = this.getIntent().getExtras();
+        deckerName = bundle.getString("deckerName");
+        topic = bundle.getString("topic");
+        Log.d("card",deckerName);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
         progressText = findViewById(R.id.card_progress);
+        getProgress();
         getFragmentManager()
                 .beginTransaction()
                 .add(R.id.words, front)
                 .commit();
         rand =new Random(25);
-
         downloadWords();
 
        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
            @Override
            public void onBackStackChanged() {
-               front.changeText(wordList.get(wordCounter).getWorditself(),wordCounter);
+              front.changeText(wordList.get(wordCounter).getWorditself(),wordCounter);
            }
        });
        // when the card front fragment is popped up from the stack, only its view will be reconstruced,
@@ -67,8 +73,6 @@ public class CardActivity extends Activity
             getFragmentManager().popBackStack();
             mShowingBack = false;
             return;
-
-
         }  // to indicate the current card state, whether in front or back
         mShowingBack = true;
         back.setText(wordList.get(wordCounter).getWorditself(),wordList.get(wordCounter).toString(),wordCounter);
@@ -103,19 +107,26 @@ public class CardActivity extends Activity
     public void onBackPressed() {
 
         Intent intent = new Intent();
-        intent.putExtra("progress",2);
+        intent.putExtra("progress",masteredList.size());
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setProgress();
+
     }
 
     /* download words with volley*/
     private void downloadWords()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"https://nineteencommas.github.io/EnglishMoreJsons/testwords.json",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://35.178.77.171:5000/get_word_list?decker="+deckerName,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        wordList = JsonParser.getAllWords(response);
+                        wordList = JsonHelper.getAllWords(response);
                         if(wordList.size()== 0)
                         {
                             initializeCardFront("nothing happened. i'm so sorry");
@@ -123,13 +134,13 @@ public class CardActivity extends Activity
                         else
                         {
                             initializeCardFront(wordList.get(0).getWorditself());
-                            progressText.setText("");
+                           // progressText.setText("");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("APP", error.toString());
+                Log.d("JSON", error.toString());
             }
         });
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
@@ -166,6 +177,30 @@ public class CardActivity extends Activity
 
         } // else do nothing
     }
+
+
+    public void getProgress() {
+        SharedPreferences preferences = getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+        ArrayList<Integer> afterParsed = JsonHelper.getDeckerProgress(preferences.getString(deckerName, "defaultValueforTopicInfo"));
+        for(Integer each : afterParsed)
+        {
+            masteredList.add(each);
+        }
+       progressText.setText("Already mastered "+ String.valueOf(masteredList.size()));
+        previousMastered = afterParsed.size();
+    }
+    public void setProgress()
+    {
+        SharedPreferences mPreferences = getApplicationContext().getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(topic,mPreferences.getInt(topic,0) + masteredList.size()-previousMastered);
+        preferencesEditor.putString(deckerName,JsonHelper.putDeckerProgressToString(masteredList));
+        preferencesEditor.putInt(deckerName+"num",masteredList.size());
+        preferencesEditor.commit();
+
+    }
+
+
 
 
 }
