@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent" >
 
     <LinearLayout
@@ -12,7 +13,7 @@
         <LinearLayout
             android:id="@+id/words"
             android:layout_width="match_parent"
-            android:layout_height="541dp"
+            android:layout_height="588dp"
             android:layout_marginTop="50dp"
             android:orientation="vertical"></LinearLayout>
 
@@ -25,9 +26,13 @@
             <TextView
                 android:id="@+id/card_progress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@color/White"
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

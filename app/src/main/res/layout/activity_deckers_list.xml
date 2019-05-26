@@ -9,6 +9,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/deckerRecycle"
+        android:background="@color/colorPrimary"
         android:layout_width="399dp"
         android:layout_height="619dp"
         android:layout_marginStart="8dp"
