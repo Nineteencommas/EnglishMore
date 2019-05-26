@@ -30,4 +30,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login_signup">login/signup</string>
+    <string name="practice_this_topic">PRACTICE THIS TOPIC</string>
+    <string name="textview">TextView</string>
+    <string name="i_don_t_know_this_word">I don\'t know this word.</string>
 </resources>

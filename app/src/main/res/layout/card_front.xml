@@ -9,9 +9,9 @@
         android:layout_width="340dp"
         android:layout_height="231dp"
         android:layout_centerInParent="true"
-
         android:layout_centerVertical="true"
         app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardElevation="12dp">
 
 
@@ -20,16 +20,22 @@
             android:layout_width="359dp"
             android:layout_height="66dp"
             android:layout_gravity="bottom|center"
+            android:background="@color/WhiteSmoke"
+            android:textColor="@color/colorPrimary"
             android:text="Tap to see meaning ->" />
 
         <TextView
             android:id="@+id/card_front_word_itself"
             android:layout_width="176dp"
-            android:layout_height="104dp"
+            android:layout_height="93dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="1dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:textSize="25dp" />
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>
