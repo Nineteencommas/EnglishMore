@@ -156,10 +156,10 @@ public class PreferrenceHelper {
                         {
                             downLoadInfo(context,mPreferences.getString("username","lala"),mPreferences.getString("password","llala") );
                         }
-                        Intent intent = new Intent(context,TopicListActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        context.startActivity(intent);
+//                        Intent intent = new Intent(context,TopicListActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                        context.startActivity(intent);
 
                     }
                 }, new Response.ErrorListener() {

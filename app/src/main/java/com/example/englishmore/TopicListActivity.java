@@ -10,7 +10,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class TopicListActivity extends AppCompatActivity {
+public class TopicListActivity extends BasicActivity {
     TopicsAdapter adapter;
     ArrayList<Integer> mastered = new ArrayList<>();
     ArrayList<Integer> total = new ArrayList<>();
@@ -22,7 +22,9 @@ public class TopicListActivity extends AppCompatActivity {
         // can be added if mastered is 0 add a new tag
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topics_list);
+        getLayoutInflater().inflate(R.layout.activity_topics_list, frame);
+
+        //setContentView(R.layout.activity_topics_list);
         RecyclerView mRecyclerView = findViewById(R.id.topicRecycle);
         adapter = new TopicsAdapter(mastered,topics, total,this);
 

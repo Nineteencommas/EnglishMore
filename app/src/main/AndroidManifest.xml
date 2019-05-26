@@ -23,9 +23,12 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".TopicListActivity" />
-        <activity android:name=".DeckersListActivity" />
-        <activity android:name=".CardActivity" />
+        <activity android:name=".TopicListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DeckersListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".CardActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">

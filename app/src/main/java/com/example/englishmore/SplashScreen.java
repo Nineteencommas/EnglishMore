@@ -43,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
                         + "com.example.englishmore.topicAndDeckerInfo" + ".xml");
                 if(f.exists()) {
                     PreferrenceHelper.checkIfUpdate(getApplicationContext());
-                    startActivity(new Intent(getApplicationContext(), TopicListActivity.class));
+                   startActivity(new Intent(getApplicationContext(), TopicListActivity.class));
                 }
                 else
                 {

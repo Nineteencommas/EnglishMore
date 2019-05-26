@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-public class CardActivity extends Activity {
+public class CardActivity extends BasicActivity {
     /**
      * View elements
      **/
@@ -50,7 +50,9 @@ public class CardActivity extends Activity {
         deckerIndex = bundle.getInt("deckerIndex");
         Log.d("card", deckerName);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+        //setContentView(R.layout.activity_card);
+        getLayoutInflater().inflate(R.layout.activity_card, frame);
+
         progressText = findViewById(R.id.card_progress);
         getProgress();
         getFragmentManager()

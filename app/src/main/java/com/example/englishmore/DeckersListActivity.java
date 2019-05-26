@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class DeckersListActivity extends AppCompatActivity {
+public class DeckersListActivity extends BasicActivity {
     ArrayList<Integer> mastered = new ArrayList<>();
     ArrayList<Integer> total = new ArrayList<>();
     String topic;
@@ -24,7 +24,9 @@ public class DeckersListActivity extends AppCompatActivity {
         deckerNum = bundle.getInt("deckerNum");// get the integer of
         getInfoFromPreferrence();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deckers_list);
+        //setContentView(R.layout.activity_deckers_list);
+        getLayoutInflater().inflate(R.layout.activity_deckers_list, frame);
+
         RecyclerView mRecyclerView = findViewById(R.id.deckerRecycle);
         adapter = new DeckerAdapter(mastered,total,topic,this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
