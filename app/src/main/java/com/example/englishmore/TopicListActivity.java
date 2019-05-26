@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class TopicListActivity extends AppCompatActivity {
 
 
         // can be added if mastered is 0 add a new tag
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics_list);
         RecyclerView mRecyclerView = findViewById(R.id.topicRecycle);
@@ -33,10 +35,13 @@ public class TopicListActivity extends AppCompatActivity {
 
 public void getTopicInfoAndTotal() {
     SharedPreferences preferences = getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
+
     ArrayList<String> topicList = JsonHelper.getTopicFromBasicInfo(preferences.getString("topicList", "defaultValueforTopicInfo"));
     preferences = getSharedPreferences("com.example.englishmore.topicAndDeckerInfo",MODE_PRIVATE);
+    Log.d("testForTopic",topicList.toString());
     for (String each : topicList) {
         total.add((Integer)preferences.getInt(each+"TotalWords", 0));
+        Log.d("testForTopic",each);
         topics.add(each);
     }
 
