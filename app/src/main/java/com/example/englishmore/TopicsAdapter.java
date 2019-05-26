@@ -14,10 +14,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+
+
 
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder>{
     private ArrayList<Integer> mastered;
@@ -49,6 +50,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
+
         return topics.size();
     }
 
@@ -61,10 +63,10 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         public ViewHolder(View view){
             super(view);
 
-            topicText  = (TextView) view.findViewById(R.id.topicText);
-            progressBar = (ProgressBar) view.findViewById(R.id.topicProgress);
-            startTopicBtn = (Button) view.findViewById(R.id.topicBtn);
-            topicProgressText = (TextView) view.findViewById(R.id.topicProgressText);
+            topicText  = view.findViewById(R.id.topicText);
+            progressBar = view.findViewById(R.id.topicProgress);
+            startTopicBtn = view.findViewById(R.id.topicBtn);
+            topicProgressText = view.findViewById(R.id.topicProgressText);
 
             startTopicBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,10 +75,16 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
                     Intent intent = new Intent(context,DeckersListActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("topic", topics.get(getAdapterPosition()));
+
+                    bundle.putInt("topicProgress",mastered.get(getAdapterPosition()));
+                    bundle.putInt("deckerNum", getAdapterPosition());
+
+
                     Log.d("Topic", "the bundle is"+topics.get(getAdapterPosition()));
                     int temp = preferences.getInt(topics.get(getAdapterPosition())+"Deckernum",1);
                     bundle.putInt("deckerNum",preferences.getInt(topics.get(getAdapterPosition())+"Deckernum",1));
                     Log.d("Topic","the bundle is "+temp);
+
                     intent.putExtras(bundle);
 
                     context.startActivity(intent);

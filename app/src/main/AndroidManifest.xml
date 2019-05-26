@@ -21,7 +21,8 @@
             android:name=".BasicActivity"
             android:label="@string/title_activity_basic"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".TopicListActivity" />
         <activity android:name=".DeckersListActivity" />
         <activity android:name=".CardActivity" />
