@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder> {
@@ -48,7 +47,7 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
         viewHolder.decker_num_txt.setText("Decker"+(position+1));
-        viewHolder.mastered_num_txt.setText(mastered.get(position)+"of"+total.get(position)+"is mastered.");
+        viewHolder.mastered_num_txt.setText(mastered.get(position)+" of "+total.get(position)+" is mastered.");
         viewHolder.progressBar.setMax(total.get(position));
         viewHolder.progressBar.setProgress(mastered.get(position));
 
@@ -67,10 +66,10 @@ public class DeckerAdapter extends RecyclerView.Adapter<DeckerAdapter.ViewHolder
         public ViewHolder(View view){
             super(view);
 
-            decker_num_txt  = (TextView) view.findViewById(R.id.decker_num_txt);
-            mastered_num_txt = (TextView) view.findViewById(R.id.mastered_num_txt);
-            progressBar = (ProgressBar) view.findViewById(R.id.progress_per_decker);
-            startDeckerBtn = (Button) view.findViewById(R.id.practice_decker_btn);
+            decker_num_txt  = view.findViewById(R.id.decker_num_txt);
+            mastered_num_txt = view.findViewById(R.id.mastered_num_txt);
+            progressBar = view.findViewById(R.id.progress_per_decker);
+            startDeckerBtn = view.findViewById(R.id.practice_decker_btn);
 
             startDeckerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
