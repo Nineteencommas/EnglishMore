@@ -216,9 +216,6 @@ public class CardActivity extends Activity {
         preferencesEditor.commit();
         sendWorkPostRequest(jsonObject);
 
-
-
-
     }
 
 
