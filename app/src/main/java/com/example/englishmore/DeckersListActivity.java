@@ -27,6 +27,8 @@ public class DeckersListActivity extends BasicActivity {
         //setContentView(R.layout.activity_deckers_list);
         getLayoutInflater().inflate(R.layout.activity_deckers_list, frame);
 
+        SharedPreferences  preferences = getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
+        usernameView.setText(preferences.getString("username","username"));
         RecyclerView mRecyclerView = findViewById(R.id.deckerRecycle);
         adapter = new DeckerAdapter(mastered,total,topic,this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);

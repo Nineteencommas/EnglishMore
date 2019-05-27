@@ -47,9 +47,8 @@ public void getTopicInfoAndTotal() {
         topics.add(each);
     }
 
-
-    preferences = getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
-
+    preferences = getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
+    usernameView.setText(preferences.getString("username","lalala"));
     for ( String each : topics)
     {
         mastered.add((Integer)preferences.getInt(each,0));

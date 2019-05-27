@@ -17,18 +17,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".InfoActivity"></activity>
         <activity
             android:name=".BasicActivity"
             android:label="@string/title_activity_basic"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".TopicListActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".DeckersListActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CardActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TopicListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DeckersListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">

@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -29,6 +30,7 @@ public class CardActivity extends BasicActivity {
     TextView progressText;
     CardFrontFragment front = new CardFrontFragment();
     CardBackFragment back = new CardBackFragment();
+    int deckerTotal;
     /*data structure*/
     ArrayList<Word> wordList = new ArrayList<Word>();
     ArrayList<Integer> masteredList = new ArrayList<Integer>();
@@ -44,6 +46,7 @@ public class CardActivity extends BasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Bundle bundle = this.getIntent().getExtras();
         deckerName = bundle.getString("deckerName");
         topic = bundle.getString("topic");
@@ -52,14 +55,18 @@ public class CardActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_card);
         getLayoutInflater().inflate(R.layout.activity_card, frame);
-
+        SharedPreferences  preferences = getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
+        usernameView.setText(preferences.getString("username","username"));
+        preferences = getSharedPreferences("com.example.englishmore.topicAndDeckerInfo", MODE_PRIVATE);
+        deckerTotal = preferences.getInt(deckerName, 2);
         progressText = findViewById(R.id.card_progress);
         getProgress();
         getFragmentManager()
                 .beginTransaction()
                 .add(R.id.words, front)
                 .commit();
-        rand = new Random(25);
+
+        rand = new Random(masteredList.size());
         downloadWords();
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -78,6 +85,10 @@ public class CardActivity extends BasicActivity {
     public void flipCard() {
 
         if (mShowingBack) {
+            if(masteredList.size() == deckerTotal)
+            {
+                progressText.setText("well done! You've already mastered all the words of the decker");
+            }
 
             wordCounter = rand.nextInt(wordList.size());
             progressText.setText("Already mastered " + masteredList.size());
@@ -195,6 +206,7 @@ public class CardActivity extends BasicActivity {
         SharedPreferences mPreferences = getApplicationContext().getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
         String username = mPreferences.getString("username","username");
         mPreferences = getApplicationContext().getSharedPreferences("com.example.englishmore.userProgress", MODE_PRIVATE);
+        int topicHistory = mPreferences.getInt(topic,0);
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
 
 
@@ -208,7 +220,7 @@ public class CardActivity extends BasicActivity {
             jsonObject.put("deckerName",deckerName);
             jsonObject.put("deckerNum",masteredList.size());
             jsonObject.put("username",username);
-            jsonObject.put("topicProgress",masteredList.size() - previousMastered);
+            jsonObject.put("topicProgress",topicHistory+masteredList.size() - previousMastered);
         }
         catch (JSONException E)
         {

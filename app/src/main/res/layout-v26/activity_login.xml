@@ -21,7 +21,6 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="text"
-        android:text="@string/username"
         android:textColor="@color/WhiteSmoke"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +31,6 @@
 
     <EditText
         android:id="@+id/main_password"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -43,8 +41,8 @@
         android:layout_marginBottom="8dp"
         android:autofillHints=""
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPassword"
-        android:text="@string/password"
         android:textColor="@color/WhiteSmoke"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

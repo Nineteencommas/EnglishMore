@@ -72,48 +72,15 @@ public class PreferrenceHelper {
         SharedPreferences mPreferences = context.getSharedPreferences("com.example.englishmore.basicInfo", MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.putString("username",username);
+
         preferencesEditor.putString("password",password);
         preferencesEditor.putString("topicList",topicList);
         Log.d("test2",topicList);
+        Log.d("test2",username);
         preferencesEditor.commit();
     }
 
-    public static void downloadProgress(final Context context, final String username, final String password)
-    {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://35.178.77.171:5000/get_progress?username="+username+"&password="+password,
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        parseInfoResponse(response, context, username, password);
-                        Log.d("JSON", response);
 
-                        if(response.equals("password is wrong"))
-                        {
-                          //  LoginActivity.getInstance().wrongPassWord();
-                        }
-                        else
-                        {
-                            if(!response.equals("new user")) {
-                                parseProgress(response, context);
-                            }
-
-                            Intent intent = new Intent(context,TopicListActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                            context.startActivity(intent);
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("APP", error.toString());
-            }
-        });
-        MyVolley.getInstance(context).addToRequestQueue(stringRequest);
-
-    }
 
     public static void parseProgress(String response, Context context) {
         Log.d("Progress", response);
@@ -156,11 +123,6 @@ public class PreferrenceHelper {
                         {
                             downLoadInfo(context,mPreferences.getString("username","lala"),mPreferences.getString("password","llala") );
                         }
-//                        Intent intent = new Intent(context,TopicListActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                        context.startActivity(intent);
-
                     }
                 }, new Response.ErrorListener() {
             @Override
