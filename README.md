@@ -8,8 +8,9 @@ EnglishMore
 - Flash card effect is implemented with the fragments transaction with self defined animator
 - The words explanation is retrieved from Webster Dictionary API
 - Each activity extends a basic navigation drawer activity, so the navigation appears in each activity.
-![Alt text](/demo_welcome.gif?raw=true "welcome")
 
-
-
+- ![welcome](/demo_welcome.gif?raw=true "welcome")
+- ![Alt text](/demo_recycler.gif?raw=true "welcome")
+- ![Alt text](/demo_flashcard.gif?raw=true "welcome")
+- ![Alt text](/demo_navi.gif?raw=true "welcome")
 
